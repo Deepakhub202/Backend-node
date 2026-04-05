@@ -5,6 +5,7 @@ const compression = require('compression');
 const morgan = require('morgan');
 const cors = require('cors');
 const { errorHandler } = require('./middlewares/errorHandler');
+const router = require('./routers/router');
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(errorHandler);
+app.use('/api',router);
 
 module.exports = app;
