@@ -6,6 +6,7 @@ const jwtVerify = (req, res, next) => {
         return res.status(401).json({ message: 'Unauthorized' });
     }
     const token = header.split(' ')[1];
+    if (!token) return res.status(400).json({message: 'invalid token'})
     try {
         const decoded = jwt.verify(token, process.env.key);
         req.user = decoded;

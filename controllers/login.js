@@ -6,7 +6,7 @@ const login = async (req,res,next) => {
     const {login,password} = req.body
 
     try {
-        const existingUser = await user.findOne({ $or: [{ email: login }, { phone: login }] }).select('+password');
+        const existingUser = await user.findOne({ $or: [{ email: login }, { phone: login }, {username: login}] }).select('+password');
 
         if (!existingUser) {
             return res.status(400).json({ message: "user not found" });
@@ -20,10 +20,11 @@ const login = async (req,res,next) => {
         
         const token = jwtToken({
             id: existingUser._id,
-            email: existingUser.email
+            email: existingUser.email,
+            username: existingUser.username
         });
 
-        res.status(201).json({message: "login successful",token});
+        res.status(200).json({message: "login successful",token});
 
     } catch (error) {
         next(error);

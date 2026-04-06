@@ -2,11 +2,12 @@ const joi = require('joi');
 
 const JoiLoginSchema = joi.object({
     login: joi.string().required().custom((value, helpers) => {
-        const Email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-        const Phone = /^\d{10}$/.test(value);
+        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        const isPhone = /^\d{10}$/.test(value);
+        const isUsername = /^[a-zA-Z0-9_]{3,15}$/.test(value);
 
-        if (!Email && !Phone) {
-            return helpers.message('Enter valid email or number');
+        if (!isEmail && !isPhone && !isUsername) {
+            return helpers.message('Enter valid email, phone, or username');
         }
 
         return value;

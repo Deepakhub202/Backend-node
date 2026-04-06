@@ -1,10 +1,11 @@
 const express = require('express');
+const dotenv = require('dotenv');
 dotenv.config();
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const cors = require('cors');
-const { errorHandler } = require('./middlewares/errorHandler');
+const errorHandler = require('./middlewares/errorHandler');
 const router = require('./routers/router');
 
 const app = express();
@@ -18,7 +19,9 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(errorHandler);
 app.use('/api',router);
+
+// Error handlers should be registered after routes.
+app.use(errorHandler);
 
 module.exports = app;
