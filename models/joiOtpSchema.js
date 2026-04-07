@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const JoiSignupSchema = Joi.object({
+const JoiSendOtpSchema = Joi.object({
     username: Joi.string().min(3).max(15).trim().required(),
     name: Joi.string().min(3).max(30).trim().required(),
     email: Joi.string().email().lowercase().trim().required(),
@@ -8,4 +8,5 @@ const JoiSignupSchema = Joi.object({
     repassword: Joi.string().min(8).max(30).trim().required()
 }).options({allowUnknown: false});
 
-module.exports = JoiSignupSchema;
+module.exports = JoiSendOtpSchema;
+
