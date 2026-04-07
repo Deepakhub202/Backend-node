@@ -1,4 +1,4 @@
-const User = require('../models/userSchema');
+const user = require('../models/userSchema');
 const mongoose = require('mongoose');
 
 const searchUsers = async (req, res, next) => {
@@ -9,13 +9,13 @@ const searchUsers = async (req, res, next) => {
             return res.status(400).json({ message: 'Username is required' });
         }
 
-        const users = await User.find({
+        const userData = await user.find({
             username: { $regex: username, $options: 'i' }
         })
         .select('username')   
         .limit(10);          
 
-        res.status(200).json({ users });
+        res.status(200).json({ users: userData });
 
     } catch (error) {
         next(error);

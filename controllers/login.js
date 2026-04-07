@@ -6,7 +6,7 @@ const login = async (req,res,next) => {
     const {login,password} = req.body
 
     try {
-        const existingUser = await user.findOne({ $or: [{ email: login }, { phone: login }, {username: login}] }).select('+password');
+        const existingUser = await user.findOne({ $or: [{ email: login }, {username: login}] }).select('+password');
 
         if (!existingUser) {
             return res.status(400).json({ message: "user not found" });
