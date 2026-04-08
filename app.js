@@ -1,6 +1,4 @@
 const express = require('express');
-const dotenv = require('dotenv');
-dotenv.config();
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
