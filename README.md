@@ -48,7 +48,7 @@ It includes authentication, user management, OTP verification, and Redis integra
 ### User Routes (Protected)
 - GET `/api/users/search` → Search users  
 - GET `/api/users/:id` → Get user by ID  
-- PUT `/api/users/:id` → Update user  
+- PUT `/api/users/update/:id` → Update user  
 - DELETE `/api/users/delete/:id` → Delete user  
 
 ---
