@@ -10,7 +10,7 @@ It includes authentication, user management, OTP verification, and Redis integra
 - User Signup with OTP verification
 - User Login (JWT Authentication)
 - Search Users
-- Get User by ID
+- Get current logged-in user
 - Update User
 - Delete User
 - Input validation using Joi
@@ -33,6 +33,7 @@ It includes authentication, user management, OTP verification, and Redis integra
 ---
 
 ## Base URL
+`http://localhost:5000/api`
 
 ---
 
@@ -40,16 +41,28 @@ It includes authentication, user management, OTP verification, and Redis integra
 
 ### Auth Routes
 - POST `/api/login` → Login user  
+  Body: `{ "login": "email-or-username", "password": "your-password" }`
 
 ### Signup & OTP Routes
 - POST `/api/signup` → Send OTP for signup  
+  Body: `{ "username": "...", "name": "...", "email": "...", "password": "...", "repassword": "..." }`
 - POST `/api/signup/verify-otp` → Verify OTP and complete signup  
+  Body: `{ "email": "...", "otp": "123456" }`
 
 ### User Routes (Protected)
-- GET `/api/users/search` → Search users  
-- GET `/api/users/:id` → Get user by ID  
-- PUT `/api/users/update/:id` → Update user  
-- DELETE `/api/users/delete/:id` → Delete user  
+- GET `/api/users/search?username=john` → Search users  
+  Query: `username`
+- GET `/api/user/find` → Get the authenticated user  
+- PUT `/api/user/update` → Update the authenticated user  
+  Body: `{ "username": "...", "name": "..." }`
+- DELETE `/api/user/delete` → Delete the authenticated user  
+
+Protected routes require:
+- Header `Authorization: Bearer <token>`
+
+Route notes:
+- The protected self routes use the JWT payload, so they do not need `:id` in the URL.
+- `GET /api/user/find`, `PUT /api/user/update`, and `DELETE /api/user/delete` all read the user id from `req.user.id`.
 
 ---
 

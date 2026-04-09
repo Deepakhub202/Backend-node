@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 
 const getUser = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const userId = req.user.id;
 
-        const userData = await user.findById(id)
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user id' });
+        }
+
+        const userData = await user.findById(userId)
             .select('name email username'); 
         if (!userData) {
             return res.status(404).json({ message: 'User not found' });

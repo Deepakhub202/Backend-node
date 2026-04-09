@@ -1,5 +1,4 @@
 const user = require('../models/userSchema');
-const mongoose = require('mongoose');
 
 const updateUser = async (req, res, next) => {
     try {
