@@ -1,8 +1,7 @@
 const redis = require('redis');
 
 const client = redis.createClient({
-    host: 'localhost',
-    port: 6379
+    url: process.env.REDIS_URL || 'redis://localhost:6379'
 });
 
 client.on('connect', () => {
@@ -13,8 +12,11 @@ client.on('error', (err) => {
     console.error('Redis error:', err);
 });
 
+client.connect().catch(() => {});
+
 const storeUserData = async (email, userData) => {
-    await client.setex(`signup:${email}`, 300, JSON.stringify(userData)); 
+    await client.setEx(`signup:${email}`, 300, JSON.stringify(userData));
+};
 
 const getStoredUserData = async (email) => {
     const data = await client.get(`signup:${email}`);
